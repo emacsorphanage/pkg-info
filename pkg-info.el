@@ -150,4 +150,9 @@ Return the version as list, or nil if PACKAGE is not installed."
 
 (provide 'pkg-info)
 
+;; Local Variables:
+;; indent-tabs-mode: nil
+;; coding: utf-8
+;; End:
+
 ;;; pkg-info.el ends here
