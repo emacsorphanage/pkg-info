@@ -68,10 +68,10 @@ Return VERSION."
 
 Return the source file as string, or nil if FEATURE was not
 found."
-  (-when-let* ((library (->> feature
-                          symbol-name
-                          locate-library
-                          (s-chop-suffix "c"))))
+  (-when-let (library (->> feature
+                        symbol-name
+                        locate-library
+                        (s-chop-suffix "c")))
     (when (file-exists-p library)
       library)))
 
