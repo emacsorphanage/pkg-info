@@ -106,19 +106,23 @@ about library headers."
 When SHOW is non-nil, show the version in mini-buffer.
 
 This function is mainly intended to find the version of a major
-mode, i.e.
+or minor mode, i.e.
 
    (pkg-info-defining-library-version 'flycheck-mode)
 
 Return the version of the library defining FUNCTION (as by
-`pkg-info-locate-library-version'), or nil if the library was not
-found or had no version."
+`pkg-info-locate-library-version').  Signal an error if FUNCTION
+is not a valid function, if its defining library was not found,
+or if the library had no proper version header."
   (interactive
    (let ((input (completing-read "Function: " obarray #'boundp :require-match)))
      (list (if (string= input "") nil (intern input)) t)))
-  (-when-let* ((definition (symbol-function function))
-               (source-file (find-lisp-object-file-name function definition)))
-    (pkg-info-library-version source-file show)))
+  (unless (functionp function)
+    (signal 'wrong-type-argument (list 'functionp function)))
+  (let ((library (symbol-file function 'defun)))
+    (unless library
+      (error "Can't find definition of %s" function))
+    (pkg-info-library-version library show)))
 
 ;;;###autoload
 (defun pkg-info-package-version (package &optional show)
