@@ -6,7 +6,7 @@
 ;; URL: https://github.com/lunaryorn/pkg-info.el
 ;; Keywords: convenience
 ;; Version: 0.3-cvs
-;; Package-Requires: ((dash "1.6.0") (s "1.6.0"))
+;; Package-Requires: ((dash "1.6.0"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -41,7 +41,8 @@
 ;;; Code:
 
 (require 'dash)
-(require 's)
+
+(require 'find-func)
 (require 'package)
 
 
@@ -63,18 +64,6 @@ Return VERSION."
     (message (pkg-info-format-version version)))
   version)
 
-(defun pkg-info-locate-feature-source (feature)
-  "Get the source file for FEATURE.
-
-Return the source file as string, or nil if FEATURE was not
-found."
-  (-when-let (library (->> feature
-                        symbol-name
-                        locate-library
-                        (s-chop-suffix "c")))
-    (when (file-exists-p library)
-      library)))
-
 ;;;###autoload
 (defun pkg-info-library-version (feature-or-file &optional show)
   "Get the version in the header of FEATURE-OR-FILE.
@@ -84,23 +73,25 @@ string with the path to a library.
 
 When SHOW is non-nil, show the version in the minibuffer.
 
-Return the version from the library header as list or nil, if the
-library was not found or had no proper library header.  See Info
-node `(elisp)Library Headers' for more information about library
-headers."
+Return the version from the library header as list.  Signal an
+error if the library was not found or had no proper library
+header.
+
+See Info node `(elisp)Library Headers' for more information
+about library headers."
   (interactive
    (list (->> (completing-read "Load library: "
                                (apply-partially 'locate-file-completion-table
                                                 load-path
                                                 (get-load-suffixes)))
-           locate-library
-           (s-chop-suffix "c"))
+           find-library-name)
          t))
-  (-when-let (source-file (if (symbolp feature-or-file)
-                              (pkg-info-locate-feature-source feature-or-file)
-                            feature-or-file))
+  (let* ((library-name (if (symbolp feature-or-file)
+                           (symbol-name feature-or-file)
+                         feature-or-file))
+         (source (find-library-name library-name)))
     (with-temp-buffer
-      (insert-file-contents source-file)
+      (insert-file-contents source)
       (let ((info (package-buffer-info)))
         (pkg-info--show-version-and-return
          (if (fboundp 'package-desc-version)
