@@ -6,7 +6,7 @@
 ;; URL: https://github.com/lunaryorn/pkg-info.el
 ;; Keywords: convenience
 ;; Version: 0.3-cvs
-;; Package-Requires: ((dash "1.6.0"))
+;; Package-Requires: ((dash "1.6.0") (epl "0.1"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -40,10 +40,10 @@
 
 ;;; Code:
 
+(require 'epl)
 (require 'dash)
 
 (require 'find-func)
-(require 'package)
 
 
 ;;;; Version information
@@ -89,15 +89,9 @@ about library headers."
   (let* ((library-name (if (symbolp feature-or-file)
                            (symbol-name feature-or-file)
                          feature-or-file))
-         (source (find-library-name library-name)))
-    (with-temp-buffer
-      (insert-file-contents source)
-      (let ((info (package-buffer-info)))
-        (pkg-info--show-version-and-return
-         (if (fboundp 'package-desc-version)
-             (package-desc-version info)
-           (version-to-list (aref (package-buffer-info) 3)))
-         show)))))
+         (source (find-library-name library-name))
+         (version (epl-package-version (epl-package-from-file source))))
+    (pkg-info--show-version-and-return version show)))
 
 ;;;###autoload
 (defun pkg-info-defining-library-version (function &optional show)
@@ -132,18 +126,18 @@ When SHOW is non-nil, show the version in the minibuffer.
 
 Return the version as list, or nil if PACKAGE is not installed."
   (interactive
-   (list (intern
-          (completing-read "Installed package: "
-                           (--map (symbol-name (car it)) package-alist)
-                           nil :require-match
-                           nil nil (symbol-name (caar package-alist))))
-         t))
-  (-when-let (info (assq package package-alist))
-    (pkg-info--show-version-and-return
-     (if (fboundp 'package-desc-version)
-         (package-desc-version (cadr info))
-       (aref (cdr info) 0))
-     show)))
+   (let* ((installed (epl-installed-packages))
+          (names (-sort #'string<
+                        (--map (symbol-name (epl-package-name it)) installed)))
+          (default (car names))
+          (reply (completing-read "Installed package: " names nil 'require-match
+                                  nil nil default)))
+     (list reply t)))
+  (let* ((name (if (stringp package) (intern package) package))
+         (package (epl-find-installed-package name)))
+    (unless package
+      (error "Can't find installed package %s" name))
+    (pkg-info--show-version-and-return (epl-package-version package) show)))
 
 (provide 'pkg-info)
 
