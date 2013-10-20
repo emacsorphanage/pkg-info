@@ -65,17 +65,16 @@ Return VERSION."
   version)
 
 ;;;###autoload
-(defun pkg-info-library-version (feature-or-file &optional show)
-  "Get the version in the header of FEATURE-OR-FILE.
+(defun pkg-info-library-version (library &optional show)
+  "Get the version in the header of LIBRARY.
 
-FEATURE-OR-FILE is either a symbol denoting a named feature, or a
-string with the path to a library.
+LIBRARY is either a symbol denoting a named feature, or a library
+name as string..
 
 When SHOW is non-nil, show the version in the minibuffer.
 
-Return the version from the library header as list.  Signal an
-error if the library was not found or had no proper library
-header.
+Return the version from the header of LIBRARY as list.  Signal an
+error if the LIBRARY was not found or had no proper header.
 
 See Info node `(elisp)Library Headers' for more information
 about library headers."
@@ -86,9 +85,7 @@ about library headers."
                                                 (get-load-suffixes)))
            find-library-name)
          t))
-  (let* ((library-name (if (symbolp feature-or-file)
-                           (symbol-name feature-or-file)
-                         feature-or-file))
+  (let* ((library-name (if (symbolp library) (symbol-name library) library))
          (source (find-library-name library-name))
          (version (epl-package-version (epl-package-from-file source))))
     (pkg-info--show-version-and-return version show)))
