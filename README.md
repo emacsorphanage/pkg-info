@@ -1,4 +1,4 @@
-pkg-info.el
+pkg-info.el [![Build Status](https://travis-ci.org/lunaryorn/pkg-info.el.png?branch=master)](https://travis-ci.org/lunaryorn/pkg-info.el)
 ===========
 
 Provide information about Emacs packages.
