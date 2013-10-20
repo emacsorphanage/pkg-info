@@ -78,6 +78,7 @@
 Start servant with cask exec servant start")))
       (epl-package-install package))))
 
+(message "Running tests on Emacs %s" emacs-version)
 (pkg-info-test-initialize-packages)
 
 
