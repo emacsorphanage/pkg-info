@@ -30,7 +30,7 @@ stop-server :
 	$(CASK) exec servant stop
 
 %.elc : %.el $(PKGDIR)
-	$(CASK) exec $(EMACS) -Q --batch $(EMACSFLAGS) -f batch-byte-compile $<
+	$(CASK) exec $(EMACS) -Q -l compat/load.el --batch $(EMACSFLAGS) -f batch-byte-compile $<
 
 $(PKGDIR) : Cask
 	$(CASK) install
