@@ -26,7 +26,6 @@
 
 (require 'cl-lib)
 (require 'find-func)
-(require 'epl)
 (require 'f)
 
 (unless noninteractive
