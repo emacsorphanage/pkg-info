@@ -70,7 +70,7 @@
   (epl-change-package-dir pkg-info-test-package-directory)
   (unless (epl-package-installed-p 'pkg-info-dummy-package)
     ;; Only install the dummy package if needed
-    (epl-add-archive "localhost" "http://localhost:9191/packages/")
+    (epl-add-archive "localhost" "http://127.0.0.1:9191/packages/")
     (epl-refresh)
     (let ((package (car (epl-find-available-packages 'pkg-info-dummy-package))))
       (unless package
