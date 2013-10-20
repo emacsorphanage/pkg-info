@@ -17,6 +17,9 @@ In your `Cask` file:
 (depends-on "pkg-info")
 ```
 
+This library is compatible with GNU Emacs 24.1 and newer.  It will work with
+Emacs 23 as well, if package.el is installed.
+
 Functions
 ---------
 
