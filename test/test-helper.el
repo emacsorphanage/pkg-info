@@ -32,6 +32,11 @@
 (unless noninteractive
   (error "The test suite cannot be used interactively."))
 
+(message "Running tests on Emacs %s" emacs-version)
+
+
+;;;; Directories
+
 (eval-and-compile
   (defconst pkg-info-test-directory (f-parent (f-this-file))
     "Directory of unit tests.")
@@ -40,16 +45,21 @@
                                        (f-parent pkg-info-test-directory))
     "Directory of unit tests."))
 
+
+;;;; Load pkg-info
+
+;; Load compatibility libraries for Emacs 23
+(load (f-join pkg-info-source-directory "compat" "load.el") nil 'no-message)
+
 (require 'pkg-info (f-join pkg-info-source-directory "pkg-info.elc"))
 
+;; Check that we are testing the right pkg-info library
 (cl-assert (f-same? (symbol-file #'pkg-info-package-version 'defun)
                     (f-join pkg-info-source-directory "pkg-info.elc"))
            nil "ERROR: pkg-info not loaded from compiled source.  Run make compile")
 
-(defconst pkg-info-version
-  (let ((default-directory pkg-info-source-directory))
-    (version-to-list (car (process-lines "cask" "version"))))
-  "The pkg-info version, to use in unit tests.")
+
+;;;; Provide dummy packages for unit tests
 
 (defconst pkg-info-test-package-directory
   (f-join pkg-info-test-directory "elpa")
@@ -69,6 +79,14 @@ Start servant with cask exec servant start")))
       (epl-package-install package))))
 
 (pkg-info-test-initialize-packages)
+
+
+;;;; Utilities
+
+(defconst pkg-info-version
+  (let ((default-directory pkg-info-source-directory))
+    (version-to-list (car (process-lines "cask" "version"))))
+  "The pkg-info version, to use in unit tests.")
 
 (provide 'test-helper)
 
