@@ -37,6 +37,9 @@
 ;; `pkg-info-package-version' gets the version of an installed package.
 ;;
 ;; `pkg-info-format-version' formats a version list as human readable string.
+;;
+;; `pkg-info-version-info' returns complete version information for a specific
+;; package.
 
 ;;; Code:
 
@@ -61,7 +64,7 @@ When SHOW is non-nil, show VERSION in minibuffer.
 
 Return VERSION."
   (when show
-    (message (pkg-info-format-version version)))
+    (message (if (listp version) (pkg-info-format-version version) version)))
   version)
 
 (defun pkg-info--read-library ()
@@ -138,6 +141,42 @@ Return the version as list, or nil if PACKAGE is not installed."
     (unless package
       (error "Can't find installed package %s" name))
     (pkg-info--show-version-and-return (epl-package-version package) show)))
+
+;;;###autoload
+(defun pkg-info-version-info (library &optional package show)
+  "Obtain complete version info for LIBRARY and PACKAGE.
+
+LIBRARY is a symbol denoting a named feature, or a library name
+as string.  PACKAGE is a symbol denoting an ELPA package.  If
+omitted or nil, default to LIBRARY.
+
+If SHOW is non-nil, show the version in the minibuffer.
+
+When called interactively, prompt for LIBRARY.  When called
+interactively with prefix argument, prompt for PACKAGE as well.
+
+Return a string with complete version information for LIBRARY.
+This version information contains the version from the headers of
+LIBRARY, and the version of the installed PACKAGE, the LIBRARY is
+part of.  If PACKAGE is not installed, or if the PACKAGE version
+is the same as the LIBRARY version, do not include a package
+version."
+  (interactive (list (pkg-info--read-library)
+                     (when current-prefix-arg
+                       (pkg-info--read-package))
+                     t))
+  (let* ((package (or package (if (stringp library) (intern library) library)))
+         (lib-version (pkg-info-library-version library))
+         (pkg-version (condition-case nil
+                          (pkg-info-package-version package)
+                        (error nil)))
+         (version (if (and pkg-version
+                           (not (version-list-= lib-version pkg-version)))
+                      (format "%s (package: %s)"
+                              (pkg-info-format-version lib-version)
+                              (pkg-info-format-version pkg-version))
+                    (pkg-info-format-version lib-version))))
+    (pkg-info--show-version-and-return version show)))
 
 (provide 'pkg-info)
 

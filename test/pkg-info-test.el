@@ -61,6 +61,12 @@
   (should (equal (pkg-info-package-version 'pkg-info-dummy-package) '(3 4 2 1)))
   (should-error (pkg-info-package-version 'no-such-package)))
 
+(ert-deftest pkg-info-version-info ()
+  (should (equal (pkg-info-version-info 'pkg-info-dummy-package) "3.4.2.1"))
+  (should (equal (pkg-info-version-info 'ruby-mode 'pkg-info-dummy-package)
+                 (format "%s (package 3.4.2.1)"
+                         (pkg-info-format-version pkg-info-ruby-mode-version)))))
+
 (ert-deftest pkg-info-format-version ()
   (should (equal (pkg-info-format-version '(3 4 2 1)) "3.4.2.1"))
   (should (equal (pkg-info-format-version '(2 1 -3)) "2.1alpha")))
