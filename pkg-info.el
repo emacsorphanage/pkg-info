@@ -69,7 +69,7 @@ Return VERSION."
   "Get the version in the header of LIBRARY.
 
 LIBRARY is either a symbol denoting a named feature, or a library
-name as string..
+name as string.
 
 When SHOW is non-nil, show the version in the minibuffer.
 
