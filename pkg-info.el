@@ -64,6 +64,22 @@ Return VERSION."
     (message (pkg-info-format-version version)))
   version)
 
+(defun pkg-info--read-library ()
+  "Read a library from minibuffer."
+  (completing-read "Load library: "
+                   (apply-partially 'locate-file-completion-table
+                                    load-path
+                                    (get-load-suffixes))))
+
+(defun pkg-info--read-package ()
+  "Read a package name from minibuffer."
+  (let* ((installed (epl-installed-packages))
+         (names (-sort #'string<
+                       (--map (symbol-name (epl-package-name it)) installed)))
+         (default (car names)))
+    (completing-read "Installed package: " names nil 'require-match
+                     nil nil default)))
+
 ;;;###autoload
 (defun pkg-info-library-version (library &optional show)
   "Get the version in the header of LIBRARY.
@@ -78,13 +94,7 @@ error if the LIBRARY was not found or had no proper header.
 
 See Info node `(elisp)Library Headers' for more information
 about library headers."
-  (interactive
-   (list (->> (completing-read "Load library: "
-                               (apply-partially 'locate-file-completion-table
-                                                load-path
-                                                (get-load-suffixes)))
-           find-library-name)
-         t))
+  (interactive (list (pkg-info--read-library) t))
   (let* ((library-name (if (symbolp library) (symbol-name library) library))
          (source (find-library-name library-name))
          (version (epl-package-version (epl-package-from-file source))))
@@ -122,14 +132,7 @@ or if the library had no proper version header."
 If SHOW is non-nil, show the version in the minibuffer.
 
 Return the version as list, or nil if PACKAGE is not installed."
-  (interactive
-   (let* ((installed (epl-installed-packages))
-          (names (-sort #'string<
-                        (--map (symbol-name (epl-package-name it)) installed)))
-          (default (car names))
-          (reply (completing-read "Installed package: " names nil 'require-match
-                                  nil nil default)))
-     (list reply t)))
+  (interactive (list (pkg-info--read-package) t))
   (let* ((name (if (stringp package) (intern package) package))
          (package (epl-find-installed-package name)))
     (unless package
