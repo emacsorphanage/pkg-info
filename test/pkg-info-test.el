@@ -27,14 +27,22 @@
 (require 'pkg-info)
 
 (require 'ert)
+(require 'lisp-mnt)
 
 (require 'pkg-info-dummy-package)
 
+(defconst pkg-info-ruby-mode-version
+  (with-temp-buffer
+    (insert-file-contents (find-library-name "ruby-mode"))
+    (version-to-list (lm-header "Version"))))
+
 (ert-deftest pkg-info-library-version-feature ()
   (should (equal (pkg-info-library-version 'pkg-info-dummy-package) '(3 4 2 1)))
+  (should (equal (pkg-info-library-version 'ruby-mode)
+                 pkg-info-ruby-mode-version))
   (should-error (pkg-info-library-version 'no-such-feature))
   ;; TODO: Fails?  We must find a way to get the defining file of a `require'
-  ;; (should (equal (pkg-info-library-version 'pkg-info) pkg-info-version))
+  ;; (should (equal (pkg-info-library-version 'pkg-info) (pkg-info-version)))
   )
 
 (ert-deftest pkg-info-library-version-filename ()
