@@ -71,7 +71,7 @@ Return VERSION."
 LIBRARY is either a symbol denoting a named feature, or a library
 name as string.
 
-When SHOW is non-nil, show the version in the minibuffer.
+If SHOW is non-nil, show the version in the minibuffer.
 
 Return the version from the header of LIBRARY as list.  Signal an
 error if the LIBRARY was not found or had no proper header.
@@ -94,7 +94,7 @@ about library headers."
 (defun pkg-info-defining-library-version (function &optional show)
   "Get the version of the library defining FUNCTION.
 
-When SHOW is non-nil, show the version in mini-buffer.
+If SHOW is non-nil, show the version in mini-buffer.
 
 This function is mainly intended to find the version of a major
 or minor mode, i.e.
@@ -119,7 +119,7 @@ or if the library had no proper version header."
 (defun pkg-info-package-version (package &optional show)
   "Get the version of an installed PACKAGE.
 
-When SHOW is non-nil, show the version in the minibuffer.
+If SHOW is non-nil, show the version in the minibuffer.
 
 Return the version as list, or nil if PACKAGE is not installed."
   (interactive
