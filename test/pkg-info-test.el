@@ -49,6 +49,10 @@
   (should-error (pkg-info-defining-library-version #'this-is-no-function))
   (should-error (pkg-info-defining-library-version (lambda () "foo"))))
 
+(ert-deftest pkg-info-package-version ()
+  (should (equal (pkg-info-package-version 'pkg-info-dummy-package) '(3 4 2 1)))
+  (should-error (pkg-info-package-version 'no-such-package)))
+
 (ert-deftest pkg-info-format-version ()
   (should (equal (pkg-info-format-version '(3 4 2 1)) "3.4.2.1"))
   (should (equal (pkg-info-format-version '(2 1 -3)) "2.1alpha")))
