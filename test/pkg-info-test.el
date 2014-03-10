@@ -47,7 +47,7 @@
   (should-error (pkg-info-library-version 'no-such-feature)))
 
 (ert-deftest pkg-info-library-version/loaded-feature-outside-load-path ()
-  :expected-result 'failed
+  :expected-result :failed
   ;; TODO: Fails?  We must find a way to get the defining file of a `require'
   (should (equal (pkg-info-library-version 'pkg-info) (pkg-info-version))))
 
