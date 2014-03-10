@@ -21,7 +21,7 @@ test : compile
 	$(CASK) exec ert-runner $(TESTARGS)
 
 .PHONY: start-server
-start-server :
+start-server : servant/packages/archive-contents
 	rm -f servant/tmp/servant.log
 	$(CASK) exec servant start > servant/tmp/servant.log 2>&1 &
 
@@ -31,6 +31,9 @@ stop-server :
 
 %.elc : %.el $(PKGDIR)
 	$(CASK) exec $(EMACS) -Q -l compat/load.el --batch $(EMACSFLAGS) -f batch-byte-compile $<
+
+servant/packages/archive-contents: $(PKGDIR)
+	$(CASK) exec servant index
 
 $(PKGDIR) : Cask
 	$(CASK) install
