@@ -1,6 +1,6 @@
 ;;; pkg-info-tests.el --- Unit tests for pkg-info    -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2013  Sebastian Wiesner
+;; Copyright (C) 2013, 2014  Sebastian Wiesner
 
 ;; Author: Sebastian Wiesner <lunaryorn@gmail.com>
 ;; Keywords:
