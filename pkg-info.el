@@ -6,7 +6,7 @@
 ;; URL: https://github.com/lunaryorn/pkg-info.el
 ;; Keywords: convenience
 ;; Version: 0.6-cvs
-;; Package-Requires: ((dash "1.6.0") (epl "0.4"))
+;; Package-Requires: ((epl "0.4"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -44,7 +44,6 @@
 ;;; Code:
 
 (require 'epl)
-(require 'dash)
 
 (require 'lisp-mnt)
 (require 'find-func)
@@ -83,8 +82,10 @@ Return VERSION."
 (defun pkg-info--read-package ()
   "Read a package name from minibuffer."
   (let* ((installed (epl-installed-packages))
-         (names (-sort #'string<
-                       (--map (symbol-name (epl-package-name it)) installed)))
+         (names (sort (mapcar (lambda (pkg)
+                                (symbol-name (epl-package-name pkg)))
+                              installed)
+                      #'string<))
          (default (car names)))
     (completing-read "Installed package: " names nil 'require-match
                      nil nil default)))

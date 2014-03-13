@@ -3,6 +3,8 @@
 master (in development)
 -----------------------
 
+- Drop dash.el dependency
+
 0.5 (Mar 13, 2014)
 ------------------
 
