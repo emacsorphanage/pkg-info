@@ -1,7 +1,7 @@
 .. default-role:: code
 
-master (in development)
------------------------
+0.5 (Mar 13, 2014)
+------------------
 
 - #5: Add support for ``X-Original-Version`` from MELPA_:
 
