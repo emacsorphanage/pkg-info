@@ -136,6 +136,15 @@
                  (format "%s (package: 3.4.2.1)"
                          (pkg-info-format-version pkg-info-ruby-mode-version)))))
 
+(ert-deftest pkg-info-version-info/library-with-original-version ()
+  (should (equal
+           (pkg-info-version-info "pkg-info-dummy-original-version") "1.3")))
+
+(ert-deftest pkg-info-version-info/library-and-package-with-original-version ()
+  (should (equal (pkg-info-version-info "pkg-info-dummy-original-version"
+                                        'pkg-info-dummy-package)
+                 "1.3 (package: 3.4.2.1)")))
+
 (ert-deftest pkg-info-version-info/package-does-not-exist ()
   (should (equal (pkg-info-version-info 'pkg-info-dummy-package 'no-such-package)
                  "3.4.2.1")))

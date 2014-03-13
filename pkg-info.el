@@ -248,7 +248,14 @@ version."
                        (pkg-info--read-package))
                      t))
   (let* ((package (or package (if (stringp library) (intern library) library)))
-         (lib-version (pkg-info-library-version library))
+         (orig-version (condition-case nil
+                           (pkg-info-library-original-version library)
+                         (error nil)))
+         ;; If we have X-Original-Version, we assume that MELPA replaced the
+         ;; library version with its generated version, so we use the
+         ;; X-Original-Version header instead, and ignore the library version
+         ;; header
+         (lib-version (or orig-version (pkg-info-library-version library)))
          (pkg-version (condition-case nil
                           (pkg-info-package-version package)
                         (error nil)))
