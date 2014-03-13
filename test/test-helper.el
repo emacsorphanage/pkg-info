@@ -32,6 +32,8 @@
 (let* ((current-file (if load-in-progress load-file-name (buffer-file-name)))
        (source-directory (locate-dominating-file current-file "Cask")))
 
+  ;; Load compatibility libraries for Emacs 23
+  (load (expand-file-name "compat/load.el" source-directory))
   (load (expand-file-name "pkg-info" source-directory))
 
   ;; Point package.el to our test packages
