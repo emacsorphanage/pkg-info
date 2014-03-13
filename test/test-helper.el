@@ -34,16 +34,9 @@
 
   (load (expand-file-name "pkg-info" source-directory))
 
-  ;; Setup package.el for our tests
+  ;; Point package.el to our test packages
   (setq package-user-dir (expand-file-name "test/elpa" source-directory))
-  (package-initialize)
-  ;; Install our dummy package
-  (unless (epl-package-installed-p 'pkg-info-dummy-package)
-    ;; Only install the dummy package if needed
-    (add-to-list 'package-archives
-                 '("localhost" . "http://127.0.0.1:9191/packages/"))
-    (package-refresh-contents)
-    (package-install 'pkg-info-dummy-package)))
+  (package-initialize))
 
 ;; Local Variables:
 ;; indent-tabs-mode: nil
