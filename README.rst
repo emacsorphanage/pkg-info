@@ -1,0 +1,62 @@
+=============
+ pkg-info.el
+=============
+
+.. default-role:: code
+
+.. role:: kbd(literal)
+
+.. image:: https://travis-ci.org/lunaryorn/pkg-info.el.png?branch=master
+   :target: https://travis-ci.org/lunaryorn/pkg-info.el
+
+Provide information about Emacs packages.
+
+Installation
+============
+
+From MELPA_ or Marmalade_ with :kbd:`M-x package-install RET pkg-info`
+
+In your `Cask` file:
+
+.. code-block:: lisp
+
+   (source melpa)
+
+   (depends-on "pkg-info")
+
+This library is compatible with GNU Emacs 24.1 and newer.  It will work with
+Emacs 23 as well, if package.el is installed.
+
+.. _MELPA: http://melpa.milkbox.net
+.. _Marmalade: http://marmalade-repo.org/
+
+Functions
+=========
+
+This library defines the following functions for use in your Emacs extensions:
+
+- `pkg-info-library-version` extracts the *version* from the header of a library.
+- `pkg-info-defining-library-version` extracts the *version* from the header of
+  a library defining a function.
+- `pkg-info-package-version` gets the *version* of an installed package.
+- `pkg-info-format-version` formats a *version* as human readable string.
+
+All of these functions are interactive commands as well.
+
+A *version* is simply a list of integers, as returned by `version-to-list`.
+
+License
+=======
+
+pkg-info.el is free software: you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+pkg-info.el is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+See COPYING_ for the complete text of the license.
+
+.. _COPYING: https://github.com/lunaryorn/pkg-info.el/blob/master/COPYING
