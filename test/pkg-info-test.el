@@ -30,11 +30,41 @@
 (require 'lisp-mnt)
 
 (require 'pkg-info-dummy-package)
+(require 'pkg-info-dummy-original-version)
 
 (defconst pkg-info-ruby-mode-version
   (with-temp-buffer
     (insert-file-contents (find-library-name "ruby-mode"))
     (version-to-list (lm-header "Version"))))
+
+(ert-deftest pkg-info-library-source/existing-library ()
+  (should (string-match-p "test/elpa/pkg-info-dummy-package-3.4.2.1/pkg-info-dummy-package.el\\'"
+                          (pkg-info-library-source "pkg-info-dummy-package"))))
+
+(ert-deftest pkg-info-library-source/non-existing-library ()
+  (should-error (pkg-info-library-source "foobar-does-not-exist")))
+
+(ert-deftest pkg-info-defining-library-version/existing-function ()
+  (should (string-match-p
+           "test/elpa/pkg-info-dummy-package-3.4.2.1/pkg-info-dummy-package.el\\'"
+           (pkg-info-defining-library 'pkg-info-dummy-package-dummy-function))))
+
+(ert-deftest pkg-info-defining-library-version/non-existing-function ()
+  (should-error (pkg-info-defining-library 'foo-bar-is-no-function)))
+
+(ert-deftest pkg-info-library-original-version/feature-exists ()
+  (should (equal (pkg-info-library-original-version 'pkg-info-dummy-original-version)
+                 '(1 3))))
+
+(ert-deftest pkg-info-library-original-version/library-exists ()
+  (should (equal (pkg-info-library-original-version "pkg-info-dummy-original-version")
+                 '(1 3))))
+
+(ert-deftest pkg-info-library-original-version/feature-does-not-exist ()
+  (should-error (pkg-info-library-original-version 'no-such-feature)))
+
+(ert-deftest pkg-info-library-original-version/library-does-not-exist ()
+  (should-error (pkg-info-library-original-version "no-such-library")))
 
 (ert-deftest pkg-info-library-version/feature-exists ()
   (should (equal (pkg-info-library-version 'pkg-info-dummy-package) '(3 4 2 1))))
@@ -57,6 +87,21 @@
 
 (ert-deftest pkg-info-library-version/library-does-not-exist ()
   (should-error (pkg-info-library-version "no-such-library")))
+
+(ert-deftest pkg-info-defining-library-original-version/defined-function ()
+  (should (equal (pkg-info-defining-library-original-version
+                  #'pkg-info-dummy-original-version-dummy-function)
+                 '(1 3))))
+
+(ert-deftest pkg-info-defining-library-original-version/no-x-original-version-header ()
+  (should-error (pkg-info-defining-library-original-version
+                 #'pkg-info-dummy-package-dummy-function)))
+
+(ert-deftest pkg-info-defining-library-original-version/undefined-function ()
+  (should-error (pkg-info-defining-library-original-version #'this-is-no-function)))
+
+(ert-deftest pkg-info-defining-library-original-version/anonymous-function-without-source ()
+  (should-error (pkg-info-defining-library-original-version (lambda () "foo"))))
 
 (ert-deftest pkg-info-defining-library-version/defined-function ()
   (should (equal (pkg-info-defining-library-version
@@ -90,6 +135,15 @@
   (should (equal (pkg-info-version-info "ruby-mode" 'pkg-info-dummy-package)
                  (format "%s (package: 3.4.2.1)"
                          (pkg-info-format-version pkg-info-ruby-mode-version)))))
+
+(ert-deftest pkg-info-version-info/library-with-original-version ()
+  (should (equal
+           (pkg-info-version-info "pkg-info-dummy-original-version") "1.3")))
+
+(ert-deftest pkg-info-version-info/library-and-package-with-original-version ()
+  (should (equal (pkg-info-version-info "pkg-info-dummy-original-version"
+                                        'pkg-info-dummy-package)
+                 "1.3 (package: 3.4.2.1)")))
 
 (ert-deftest pkg-info-version-info/package-does-not-exist ()
   (should (equal (pkg-info-version-info 'pkg-info-dummy-package 'no-such-package)
