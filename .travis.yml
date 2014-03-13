@@ -7,16 +7,9 @@ env:
   - EMACS=emacs23
   - EMACS=emacs24
   - EMACS=emacs-snapshot
-before_script:
-  # Servant requires Emacs 24
-  - make start-server
 script:
   - make compile
   - make test
-after_script:
-  - make stop-server
-after_failure:
-  - cat servant/tmp/servant.log
 matrix:
   allow_failures:
     - env: EMACS=emacs23
