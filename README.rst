@@ -27,23 +27,29 @@ In your `Cask` file:
 This library is compatible with GNU Emacs 24.1 and newer.  It will work with
 Emacs 23 as well, if package.el is installed.
 
-.. _MELPA: http://melpa.milkbox.net
-.. _Marmalade: http://marmalade-repo.org/
-
 Functions
 =========
 
 This library defines the following functions for use in your Emacs extensions:
 
+- `pkg-info-library-original-version` extracts the *original version* from the
+  header of a library.
 - `pkg-info-library-version` extracts the *version* from the header of a library.
 - `pkg-info-defining-library-version` extracts the *version* from the header of
   a library defining a function.
+- `pkg-info-defining-library-original-version` extracts the *original version*
+  from the header of a library defining a function.
 - `pkg-info-package-version` gets the *version* of an installed package.
 - `pkg-info-format-version` formats a *version* as human readable string.
 
 All of these functions are interactive commands as well.
 
-A *version* is simply a list of integers, as returned by `version-to-list`.
+A *version* is the version from the Library Headers, i.e. either from the
+`Version` or from the `Package-Version` headers.  An *original version* is the
+version from the `X-Original-Version` header added by MELPA_ to preserve
+upstream versions.
+
+Versions are represented as version lists, as returned by `version-to-list`.
 
 License
 =======
@@ -59,4 +65,6 @@ PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 See COPYING_ for the complete text of the license.
 
+.. _MELPA: http://melpa.milkbox.net
+.. _Marmalade: http://marmalade-repo.org/
 .. _COPYING: https://github.com/lunaryorn/pkg-info.el/blob/master/COPYING

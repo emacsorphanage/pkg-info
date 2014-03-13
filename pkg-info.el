@@ -46,6 +46,7 @@
 (require 'epl)
 (require 'dash)
 
+(require 'lisp-mnt)
 (require 'find-func)
 
 
@@ -74,6 +75,11 @@ Return VERSION."
                                     load-path
                                     (get-load-suffixes))))
 
+(defun pkg-info--read-function ()
+  "Read a function name from minibuffer."
+  (let ((input (completing-read "Function: " obarray #'boundp :require-match)))
+    (if (string= input "") nil (intern input))))
+
 (defun pkg-info--read-package ()
   "Read a package name from minibuffer."
   (let* ((installed (epl-installed-packages))
@@ -82,6 +88,68 @@ Return VERSION."
          (default (car names)))
     (completing-read "Installed package: " names nil 'require-match
                      nil nil default)))
+
+(defun pkg-info-library-source (library)
+  "Get the source file of LIBRARY.
+
+LIBRARY is either a symbol denoting a named feature, or a library
+name as string.
+
+Return the source file of LIBRARY as string."
+  (find-library-name (if (symbolp library) (symbol-name library) library)))
+
+(defun pkg-info-defining-library (function)
+  "Get the source file of the library defining FUNCTION.
+
+FUNCTION is a function symbol.
+
+Return the file name of the library as string.  Signal an error
+if the library does not exist, or if the definition of FUNCTION
+was not found."
+  (unless (functionp function)
+    (signal 'wrong-type-argument (list 'functionp function)))
+  (let ((library (symbol-file function 'defun)))
+    (unless library
+      (error "Can't find definition of %s" function))
+    library))
+
+(defun pkg-info-x-original-version (file)
+  "Read the X-Original-Version header from FILE.
+
+Return the value as version list, or return nil if FILE lacks
+this header.  Signal an error, if the value of the header is not
+a valid version."
+  (let ((version-str (with-temp-buffer
+                       (insert-file-contents file)
+                       (lm-header "X-Original-Version"))))
+    (when version-str
+      (version-to-list version-str))))
+
+;;;###autoload
+(defun pkg-info-library-original-version (library &optional show)
+  "Get the original version in the header of LIBRARY.
+
+The original version is stored in the X-Original-Version header.
+This header is added by the MELPA package archive to preserve
+upstream version numbers.
+
+LIBRARY is either a symbol denoting a named feature, or a library
+name as string.
+
+If SHOW is non-nil, show the version in the minibuffer.
+
+Return the version from the header of LIBRARY as list.  Signal an
+error if the LIBRARY was not found or had no X-Original-Version
+header.
+
+See Info node `(elisp)Library Headers' for more information
+about library headers."
+  (interactive (list (pkg-info--read-library) t))
+  (let ((version (pkg-info-x-original-version
+                  (pkg-info-library-source library))))
+    (if version
+        (pkg-info--show-version-and-return version show)
+      (error "Library %s has no original version" library))))
 
 ;;;###autoload
 (defun pkg-info-library-version (library &optional show)
@@ -98,10 +166,31 @@ error if the LIBRARY was not found or had no proper header.
 See Info node `(elisp)Library Headers' for more information
 about library headers."
   (interactive (list (pkg-info--read-library) t))
-  (let* ((library-name (if (symbolp library) (symbol-name library) library))
-         (source (find-library-name library-name))
+  (let* ((source (pkg-info-library-source library))
          (version (epl-package-version (epl-package-from-file source))))
     (pkg-info--show-version-and-return version show)))
+
+;;;###autoload
+(defun pkg-info-defining-library-original-version (function &optional show)
+  "Get the original version of the library defining FUNCTION.
+
+The original version is stored in the X-Original-Version header.
+This header is added by the MELPA package archive to preserve
+upstream version numbers.
+
+If SHOW is non-nil, show the version in mini-buffer.
+
+This function is mainly intended to find the version of a major
+or minor mode, i.e.
+
+   (pkg-info-defining-library-version 'flycheck-mode)
+
+Return the version of the library defining FUNCTION.  Signal an
+error if FUNCTION is not a valid function, if its defining
+library was not found, or if the library had no proper version
+header."
+  (interactive (list (pkg-info--read-function) t))
+  (pkg-info-library-original-version (pkg-info-defining-library function) show))
 
 ;;;###autoload
 (defun pkg-info-defining-library-version (function &optional show)
@@ -114,19 +203,12 @@ or minor mode, i.e.
 
    (pkg-info-defining-library-version 'flycheck-mode)
 
-Return the version of the library defining FUNCTION (as by
-`pkg-info-locate-library-version').  Signal an error if FUNCTION
-is not a valid function, if its defining library was not found,
-or if the library had no proper version header."
-  (interactive
-   (let ((input (completing-read "Function: " obarray #'boundp :require-match)))
-     (list (if (string= input "") nil (intern input)) t)))
-  (unless (functionp function)
-    (signal 'wrong-type-argument (list 'functionp function)))
-  (let ((library (symbol-file function 'defun)))
-    (unless library
-      (error "Can't find definition of %s" function))
-    (pkg-info-library-version library show)))
+Return the version of the library defining FUNCTION.  Signal an
+error if FUNCTION is not a valid function, if its defining
+library was not found, or if the library had no proper version
+header."
+  (interactive (list (pkg-info--read-function) t))
+  (pkg-info-library-version (pkg-info-defining-library function) show))
 
 ;;;###autoload
 (defun pkg-info-package-version (package &optional show)
