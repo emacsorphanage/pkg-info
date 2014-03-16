@@ -16,7 +16,7 @@ compile : $(OBJECTS)
 clean :
 	rm -rf $(OBJECTS)
 
-test : compile
+test : $(PKGDIR)
 	$(CASK) exec ert-runner $(TESTARGS)
 
 %.elc : %.el $(PKGDIR)
