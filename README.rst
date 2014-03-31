@@ -6,7 +6,7 @@
 
 .. role:: kbd(literal)
 
-.. image:: https://travis-ci.org/lunaryorn/pkg-info.el.png?branch=master
+.. image:: https://travis-ci.org/lunaryorn/pkg-info.el.svg?branch=master
    :target: https://travis-ci.org/lunaryorn/pkg-info.el
 
 Provide information about Emacs packages.
