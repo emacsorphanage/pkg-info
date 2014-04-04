@@ -49,7 +49,7 @@
 (require 'find-func)
 
 
-;;;; Version information
+;;; Version information
 (defun pkg-info-format-version (version)
   "Format VERSION as human-readable string.
 
