@@ -1,8 +1,5 @@
-=========================
- Compatibility libraries
-=========================
-
-.. default-role:: literal
+Compatibility libraries
+=======================
 
 Additional libraries for compatibility with older Emacsen:
 
