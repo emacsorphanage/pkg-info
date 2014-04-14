@@ -2,6 +2,7 @@ pkg-info.el — Emacs package information
 =======================================
 
 [![travis][badge-travis]][travis]
+[![license][badge-license]][copying]
 
 Provide information about Emacs packages.
 
@@ -59,9 +60,10 @@ PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 See [`COPYING`][copying] for the complete text of the license.
 
+[badge-license]: https://img.shields.io/badge/license-GPL_3-green.svg?dummy
+[COPYING]: https://github.com/lunaryorn/pkg-info.el/blob/master/COPYING
 [badge-travis]: https://travis-ci.org/lunaryorn/pkg-info.el.svg?branch=master
 [travis]: https://travis-ci.org/lunaryorn/pkg-info.el
 [cask]: http://cask.github.io/
 [MELPA]: http://melpa.milkbox.net
 [Marmalade]: http://marmalade-repo.org/
-[COPYING]: https://github.com/lunaryorn/pkg-info.el/blob/master/COPYING
