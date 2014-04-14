@@ -1,5 +1,5 @@
-pkg-info.el — Emacs package information
-=======================================
+pkg-info.el
+===========
 
 [![travis][badge-travis]][travis]
 [![license][badge-license]][copying]
