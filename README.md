@@ -1,34 +1,28 @@
-=============
- pkg-info.el
-=============
+pkg-info.el — Emacs package information
+=======================================
 
-.. default-role:: code
-
-.. role:: kbd(literal)
-
-.. image:: https://travis-ci.org/lunaryorn/pkg-info.el.svg?branch=master
-   :target: https://travis-ci.org/lunaryorn/pkg-info.el
+[![travis][badge-travis]][travis]
 
 Provide information about Emacs packages.
 
 Installation
-============
+------------
 
-From MELPA_ or Marmalade_ with :kbd:`M-x package-install RET pkg-info`
+From MELPA_ or Marmalade_ with <kbd>M-x package-install RET pkg-info</kbd>.
 
-In your `Cask` file:
+In your [`Cask`][cask] file:
 
-.. code-block:: lisp
+```cl
+(source melpa)
 
-   (source melpa)
-
-   (depends-on "pkg-info")
+(depends-on "pkg-info")
+```
 
 This library is compatible with GNU Emacs 24.1 and newer.  It will work with
 Emacs 23 as well, if package.el is installed.
 
 Functions
-=========
+---------
 
 This library defines the following functions for use in your Emacs extensions:
 
@@ -52,7 +46,7 @@ upstream versions.
 Versions are represented as version lists, as returned by `version-to-list`.
 
 License
-=======
+-------
 
 pkg-info.el is free software: you can redistribute it and/or modify it under the
 terms of the GNU General Public License as published by the Free Software
@@ -63,8 +57,11 @@ pkg-info.el is distributed in the hope that it will be useful, but WITHOUT ANY
 WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-See COPYING_ for the complete text of the license.
+See [`COPYING`][copying] for the complete text of the license.
 
-.. _MELPA: http://melpa.milkbox.net
-.. _Marmalade: http://marmalade-repo.org/
-.. _COPYING: https://github.com/lunaryorn/pkg-info.el/blob/master/COPYING
+[badge-travis]: https://travis-ci.org/lunaryorn/pkg-info.el.svg?branch=master
+[travis]: https://travis-ci.org/lunaryorn/pkg-info.el
+[cask]: http://cask.github.io/
+[MELPA]: http://melpa.milkbox.net
+[Marmalade]: http://marmalade-repo.org/
+[COPYING]: https://github.com/lunaryorn/pkg-info.el/blob/master/COPYING

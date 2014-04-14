@@ -1,4 +1,5 @@
-.. default-role:: code
+Changelog
+=========
 
 master (in development)
 -----------------------
@@ -8,16 +9,14 @@ master (in development)
 0.5 (Mar 13, 2014)
 ------------------
 
-- #5: Add support for ``X-Original-Version`` from MELPA_:
+- #5: Add support for ``X-Original-Version`` from [MELPA][]:
 
-  - Add `pkg-info-library-original-version` to extract ``X-Original-Version``
+  - Add `pkg-info-library-original-version` to extract `X-Original-Version`
     from a library
   - Add `pkg-info-defining-library-original-version` to extract the
-    ``X-Original-Version`` from a library defining a symbol
-  - Prefer ``X-Original-Version`` over the library version in
+    `X-Original-Version` from a library defining a symbol
+  - Prefer `X-Original-Version` over the library version in
     `pkg-info-version-info`
-
-.. _MELPA: http://melpa.milkbox.net/
 
 0.4 (Nov 1, 2013)
 -----------------
@@ -28,9 +27,7 @@ master (in development)
 0.3 (Oct 20, 2013)
 ------------------
 
-- Use EPL_ for Emacs 23 compatibility
-
-.. _EPL: https://github.com/cask/epl
+- Use [EPL][] for Emacs 23 compatibility
 
 0.2 (Oct 15, 2013)
 ------------------
@@ -41,3 +38,6 @@ master (in development)
 ------------------
 
 Initial release
+
+[MELPA]: http://melpa.milkbox.net/
+[EPL]: https://github.com/cask/epl
