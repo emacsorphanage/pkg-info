@@ -1,8 +1,8 @@
 pkg-info.el
 ===========
 
-[![travis][badge-travis]][travis]
-[![license][badge-license]][copying]
+[![Build Status][badge-travis]][travis]
+[![License GPL 3][badge-license]][copying]
 
 Provide information about Emacs packages.
 
