@@ -9,7 +9,7 @@ master (in development)
 0.5 (Mar 13, 2014)
 ------------------
 
-- #5: Add support for ``X-Original-Version`` from [MELPA][]:
+- Add support for ``X-Original-Version`` from [MELPA][] (GH-5):
 
   - Add `pkg-info-library-original-version` to extract `X-Original-Version`
     from a library
@@ -32,7 +32,7 @@ master (in development)
 0.2 (Oct 15, 2013)
 ------------------
 
-- #1: Fix source lookup for libraries
+- Fix source lookup for libraries (GH-1)
 
 0.1 (Aug 17, 2013)
 ------------------
