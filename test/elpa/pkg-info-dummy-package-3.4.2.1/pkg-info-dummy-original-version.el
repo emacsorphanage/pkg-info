@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2013  Sebastian Wiesner
 
-;; Author: Sebastian Wiesner <lunaryorn@gmail.com>
+;; Author: Sebastian Wiesner <swiesner@lunaryorn.com>
 ;; URL: https://github.com/lunaryorn/pkg-info.el
 ;; Version: 3.4.2.1
 ;; X-Original-Version: 1.3

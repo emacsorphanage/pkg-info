@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2013, 2014  Sebastian Wiesner
 
-;; Author: Sebastian Wiesner <lunaryorn@gmail.com>
+;; Author: Sebastian Wiesner <swiesner@lunaryorn.com>
 ;; URL: https://github.com/lunaryorn/pkg-info.el
 ;; Keywords: convenience
 ;; Version: 0.6-cvs
