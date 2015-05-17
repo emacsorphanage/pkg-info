@@ -288,8 +288,7 @@ version."
 
 (defun pkg-info-retrieve-melpa-recipes ()
   "Retrieve MELPA recipes from MELPA archive."
-  (let ((buffer (url-retrieve-synchronously pkg-info-melpa-recipe-url
-                                            nil 'inhibit-cookies)))
+  (let ((buffer (url-retrieve-synchronously pkg-info-melpa-recipe-url)))
     (with-current-buffer buffer
       (unwind-protect
           (let ((response-code (url-http-parse-response)))
