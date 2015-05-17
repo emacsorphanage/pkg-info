@@ -167,13 +167,13 @@
   (should (equal (pkg-info-get-melpa-recipe 'pkg-info)
                  '((fetcher . "github") (repo . "lunaryorn/pkg-info.el")))))
 
-(ert-deftest pkg-info-get-melpa-recipe/package-does-not-exit ()
+(ert-deftest pkg-info-get-melpa-recipe/package-does-not-exist ()
   (should-not (pkg-info-get-melpa-recipe 'foobarblubb)))
 
 (ert-deftest pkg-info-get-melpa-fetcher/has-a-fetcher ()
   (should (equal (pkg-info-get-melpa-fetcher 'pkg-info) "github")))
 
-(ert-deftest pkg-info-get-melpa-fetcher/package-does-not-exit ()
+(ert-deftest pkg-info-get-melpa-fetcher/package-does-not-exist ()
   (should-not (pkg-info-get-melpa-fetcher 'foobarblubb)))
 
 (ert-deftest pkg-info-wiki-package-p/a-wiki-package ()
