@@ -5,6 +5,9 @@ master (in development)
 -----------------------
 
 - Drop dash.el dependency
+- Add `pkg-info-get-melpa-recipe`
+- Add `pkg-info-get-melpa-fetcher`
+- Add `pkg-info-wiki-package-p`
 
 0.5 (Mar 13, 2014)
 ------------------

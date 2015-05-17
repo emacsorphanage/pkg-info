@@ -37,6 +37,9 @@ This library defines the following functions for use in your Emacs extensions:
   from the header of a library defining a function.
 - `pkg-info-package-version` gets the *version* of an installed package.
 - `pkg-info-format-version` formats a *version* as human readable string.
+- `pkg-info-get-melpa-recipe` gets the MELPA recipe for a package.
+- `pkg-info-wiki-package-p` determines whether a package was build from
+  EmacsWiki on MELPA.
 
 All of these functions are interactive commands as well.
 
