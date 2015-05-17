@@ -1,6 +1,6 @@
 ;;; pkg-info.el --- Information about packages       -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2013, 2014  Sebastian Wiesner
+;; Copyright (C) 2013-2015  Sebastian Wiesner <swiesner@lunaryorn.com>
 
 ;; Author: Sebastian Wiesner <swiesner@lunaryorn.com>
 ;; URL: https://github.com/lunaryorn/pkg-info.el
