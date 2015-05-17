@@ -1,8 +1,8 @@
 Changelog
 =========
 
-master (in development)
------------------------
+0.6 (May 17, 2015)
+------------------
 
 - Drop dash.el dependency
 - Add `pkg-info-get-melpa-recipe`
