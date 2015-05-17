@@ -55,7 +55,8 @@
 
 (require 'lisp-mnt)
 (require 'find-func)
-(require 'json)
+(require 'json)                         ; `json-read'
+(require 'url-http)                     ; `url-http-parse-response'
 
 (defvar url-http-end-of-headers)
 
