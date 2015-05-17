@@ -5,7 +5,7 @@
 ;; Author: Sebastian Wiesner <swiesner@lunaryorn.com>
 ;; URL: https://github.com/lunaryorn/pkg-info.el
 ;; Keywords: convenience
-;; Version: 0.6
+;; Version: 0.7-cvs
 ;; Package-Requires: ((epl "0.8"))
 
 ;; This file is not part of GNU Emacs.
