@@ -6,7 +6,7 @@
 ;; URL: https://github.com/lunaryorn/pkg-info.el
 ;; Keywords: convenience
 ;; Version: 0.6-cvs
-;; Package-Requires: ((epl "0.4"))
+;; Package-Requires: ((epl "0.8"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -231,7 +231,7 @@ If SHOW is non-nil, show the version in the minibuffer.
 Return the version as list, or nil if PACKAGE is not installed."
   (interactive (list (pkg-info--read-package) t))
   (let* ((name (if (stringp package) (intern package) package))
-         (package (epl-find-installed-package name)))
+         (package (car (epl-find-installed-packages name))))
     (unless package
       (error "Can't find installed package %s" name))
     (pkg-info--show-version-and-return (epl-package-version package) show)))
