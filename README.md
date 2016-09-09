@@ -9,7 +9,7 @@ Provide information about Emacs packages.
 Installation
 ------------
 
-From MELPA_ or Marmalade_ with <kbd>M-x package-install RET pkg-info</kbd>.
+From [MELPA][] with <kbd>M-x package-install RET pkg-info</kbd>.
 
 In your [`Cask`][cask] file:
 
@@ -69,5 +69,4 @@ See [`COPYING`][copying] for the complete text of the license.
 [badge-travis]: https://travis-ci.org/lunaryorn/pkg-info.el.svg?branch=master
 [travis]: https://travis-ci.org/lunaryorn/pkg-info.el
 [cask]: http://cask.github.io/
-[MELPA]: http://melpa.milkbox.net
-[Marmalade]: http://marmalade-repo.org/
+[MELPA]: http://melpa.org
