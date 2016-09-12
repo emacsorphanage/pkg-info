@@ -1,6 +1,6 @@
 ;;; pkg-info-tests.el --- Unit tests for pkg-info    -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2013, 2014, 2015  Sebastian Wiesner
+;; Copyright (C) 2013-2016  Sebastian Wiesner
 
 ;; Author: Sebastian Wiesner <swiesner@lunaryorn.com>
 ;; Keywords:
@@ -164,8 +164,9 @@
   (should (equal (pkg-info-format-version '(2 1 -3)) "2.1alpha")))
 
 (ert-deftest pkg-info-get-melpa-recipe/has-a-proper-recipe ()
-  (should (equal (pkg-info-get-melpa-recipe 'pkg-info)
-                 '((fetcher . "github") (repo . "lunaryorn/pkg-info.el")))))
+  (let ((recipe (pkg-info-get-melpa-recipe 'pkg-info)))
+    (should (equal (cdr (assq 'fetcher recipe)) "github"))
+    (should (equal (cdr (assq 'repo recipe)) "lunaryorn/pkg-info.el"))))
 
 (ert-deftest pkg-info-get-melpa-recipe/package-does-not-exist ()
   (should-not (pkg-info-get-melpa-recipe 'foobarblubb)))
@@ -190,4 +191,4 @@
 ;; indent-tabs-mode: nil
 ;; End:
 
-;;; pkg-info-tests.el ends here
+;;; pkg-info-test.el ends here
