@@ -9,7 +9,7 @@ matrix:
     - env: EMACS_VERSION=snapshot
 cache:
   - directories:
-      - $HOME/.cask/
+      - $HOME/.emacs.d/.cask/
       - .cask/
 env:
   matrix:
