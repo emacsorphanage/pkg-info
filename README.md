@@ -19,6 +19,9 @@ In your [`Cask`][cask] file:
 (depends-on "pkg-info")
 ```
 
+Alternative, users of Debian 9 or later or Ubuntu 16.04 or later may
+simply `apt-get install elpa-pkg-info`.
+
 This library is compatible with GNU Emacs 24.1 and newer.  It will probably work
 with Emacs 23 as well, if package.el is installed, but it is not tested on Emacs
 23 anymore.
